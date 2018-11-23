@@ -159,7 +159,7 @@ class SSHChannel(RepresentationMixin):
         remote_dest = remote_dir + '/' + os.path.basename(local_source)
 
         try:
-            self.sftp_client.mkdir(remote_dir)
+            self._recursive_mkdir(remote_dir)
         except IOError as e:
             if e.errno is None:
                 logger.info(
@@ -227,3 +227,31 @@ class SSHChannel(RepresentationMixin):
 
     def close(self):
         return self.ssh_client.close()
+
+    def _recursive_mkdir(self, remote_path, is_filename=False):
+        """
+        recursively create directories if they don't exist
+        remote_path - remote path to create.
+        is_filename - specifies if remote path is a filename (rather than directory)
+        """
+
+        dirs_ = []
+
+        if is_filename:
+            dir_, basename = os.path.split(remote_path)
+        else:
+            dir_ = remote_path
+
+        while len(dir_) > 1:
+            dirs_.append(dir_)
+            dir_, _ = os.path.split(dir_)
+
+        if len(dir_) == 1 and not dir_.startswith("/"):
+            dirs_.append(dir_)  # For a remote_path path like y/x.txt
+
+        while len(dirs_):
+            dir_ = dirs_.pop()
+            try:
+                self.sftp_client.stat(dir_)
+            except:
+                self.sftp_client.mkdir(dir_)
