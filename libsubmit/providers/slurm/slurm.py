@@ -219,6 +219,31 @@ class SlurmProvider(ClusterProvider, RepresentationMixin):
         self.resources.extend([{'job_id': job_id, 'status': 'PENDING', 'size': 1}])
         return True
 
+    def info(self, jids):
+        fields = ['JobID', 'NCPUS', 'NNodes', 'State', 'TimeLimit', 'Elapsed']
+        delim = '|&libsubmit&|'
+
+        cmd = f"sacct -j {','.join(jids)} -n -o {','.join(fields)} -p --delimiter='{delim}'"
+        exitstatus, stdout, stderr = self.channel.execute_wait(cmd)
+
+        data = []
+
+        for line in stdout.split('\n'):
+            # skip empty lines
+            if len(line) == 0:
+                continue
+
+            field_values = line.split(delim)
+            jid = field_values[0]
+
+            if 'batch' not in jid and 'extern' not in jid:
+                data.append({
+                    fields[index]: field_values[index]
+                    for index in range(1, len(fields))
+                })
+
+        return data
+
 
 if __name__ == "__main__":
 
