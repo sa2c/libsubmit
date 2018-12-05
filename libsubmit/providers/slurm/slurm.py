@@ -216,7 +216,7 @@ class SlurmProvider(ClusterProvider, RepresentationMixin):
         return rets
 
     def _test_add_resource(self, job_id):
-        self.resources.extend([{'job_id': job_id, 'status': 'PENDING', 'size': 1}])
+        self.resources[job_id] = {'job_id': job_id, 'status': 'PENDING', 'size': 1}
         return True
 
     def info(self, jids):
