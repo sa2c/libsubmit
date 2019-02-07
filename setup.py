@@ -8,6 +8,7 @@ install_requires = [
     'six',
     'configparser',
     'future-fstrings',
+    'configparser'
     ]
 
 tests_require = [
