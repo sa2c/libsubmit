@@ -116,7 +116,7 @@ class ClusterProvider(ExecutionProvider):
             submit_script = submit_script.replace("\r\n", "\n")
             # submit_script = Template(template).safe_substitute(jobname=job_name, **configs)
             with open(script_filename, 'wb') as f:
-                f.write(submit_script)
+                f.write(submit_script.encode())
 
         except KeyError as e:
             logger.error("Missing keys for submit script : %s", e)

@@ -166,8 +166,8 @@ class SlurmProvider(ClusterProvider, RepresentationMixin):
         job_config["nodes"] = self.nodes_per_block
         job_config["tasks_per_node"] = self.tasks_per_node
         job_config["walltime"] = wtime_to_minutes(self.walltime)
-        job_config["overrides"] = self.overrides
         job_config["partition"] = self.partition
+        job_config["overrides"] = self.overrides
         job_config["user_script"] = command
 
         # Wrap the command
