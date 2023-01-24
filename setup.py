@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-with open('libsubmit/version.py') as f:
+with open('version.py') as f:
     exec(f.read())
 
 install_requires = [
