@@ -23,7 +23,7 @@ tests_require = [
 
 setup(
     name="libsubmit",
-    version="0.5.1-a3",
+    version=VERSION,
     description="Uniform interface to clouds, clusters, grids and supercomputers.",
     long_description="Submit, track and cancel arbitrary bash scripts on computate resources",
     url="https://github.com/Parsl/libsubmit",
