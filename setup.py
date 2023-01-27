@@ -52,5 +52,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     keywords = ['Workflows', 'Scientific computing'],
-    py_modules=['libsubmit']
+    py_modules=['libsubmit'],
+    zip_safe = False
 )
