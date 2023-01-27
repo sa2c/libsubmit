@@ -32,8 +32,7 @@ setup(
     license='Apache 2.0',
     download_url = 'https://github.com/Parsl/libsubmit/archive/master.zip',
     package_data={'': ['LICENSE']},
-    package_dir={'': 'libsubmit'}
-    packages=find_packages(),
+    packages=['channels', 'launchers', 'providers'],
     install_requires=install_requires,
     extras_require = {
         'aws' : ['boto3'],
